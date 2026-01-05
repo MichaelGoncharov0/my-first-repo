@@ -1,4 +1,3 @@
-cho "Running integration tests..."
 name: Combined Sequential and Parallel Jobs
 
 on:
