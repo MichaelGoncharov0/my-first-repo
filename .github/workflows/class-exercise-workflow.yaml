@@ -1,0 +1,65 @@
+name: Class Exercise Workflow
+on:
+  push:
+    branches:
+      - main
+      - master
+
+jobs:
+  job1-compare-variable:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Compare file with repository variable
+        run: |
+          FILE_VALUE=$(cat file1.txt)
+          VAR_VALUE="${{ vars.SH7VAR }}"
+
+          if [ "$FILE_VALUE" != "$VAR_VALUE" ]; then
+            echo "File does not match repository variable"
+            exit 1
+          fi
+
+          echo "File matches repository variable"
+
+  job2-compare-secret:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Compare file with secret
+        run: |
+          FILE_VALUE=$(cat file2.txt)
+          SECRET_VALUE="${{ secrets.SH7SECRET }}"
+
+          if [ "$FILE_VALUE" != "$SECRET_VALUE" ]; then
+            echo "File does not match secret"
+            exit 1
+          fi
+
+          echo "File matches secret"
+
+  job3-confirm-success:
+    runs-on: ubuntu-latest
+    needs:
+      - job1-compare-variable
+      - job2-compare-secret
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Print file and variable and confirm success
+        run: |
+          FILE_VALUE=$(cat file1.txt)
+          VAR_VALUE="${{ vars.SH7VAR }}"
+
+          echo "File value: $FILE_VALUE"
+          echo "Variable value: $VAR_VALUE"
+          echo "All checks passed successfully"
+ 
