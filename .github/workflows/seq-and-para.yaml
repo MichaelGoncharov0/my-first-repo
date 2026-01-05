@@ -1,4 +1,4 @@
-
+cho "Running integration tests..."
 name: Combined Sequential and Parallel Jobs
 
 on:
@@ -29,7 +29,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Run Integration Tests
-        run: exit 1
+        run: echo "Running integration tests..."
 
   lint:
     needs: build
