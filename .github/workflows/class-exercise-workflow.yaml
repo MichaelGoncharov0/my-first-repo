@@ -48,7 +48,6 @@ jobs:
     runs-on: ubuntu-latest
     needs:
       - job1-compare-variable
-      - job2-compare-secret
 
     steps:
       - name: Checkout code
